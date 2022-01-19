@@ -1,0 +1,46 @@
+import turtle
+
+
+# Function to draw square
+def drawCarpet(point, tur):
+    tur.up()
+    tur.goto(point[0][0], point[0][1])
+    tur.down()
+    tur.goto(point[1][0], point[1][1])
+    tur.goto(point[2][0], point[2][1])
+    tur.goto(point[3][0], point[3][1])
+    tur.goto(point[0][0], point[0][1])
+
+
+def thirds(p1, p2):
+    print(((abs(p1[0]) + abs(p2[0])) / 3, (abs(p1[1]) + abs(p2[1])) / 3))
+    return ((abs(p1[0]) + abs(p2[0])) / 3, (abs(p1[1]) + abs(p2[1])) / 3)
+
+
+def sierpinski(point, degree, tur):
+    drawCarpet(point, tur)
+
+    if degree > 0:
+        sierpinski([point[0], thirds(point[0], point[1]), thirds(point[1], point[2]), thirds(point[0], point[3])],
+                   degree - 1, tur)
+
+
+# Main functions
+def main():
+    # create turtle object
+    myTur = turtle.Turtle()
+    myTur.speed(5)
+    windows = turtle.Screen()
+
+    points = [[-300, -300], [-300, 300], [300, 300], [300, -300]]
+    degree = 1
+
+    sierpinski(points, degree, myTur)
+
+    myTur.hideturtle()  # hide the turtle cursor after drawing is
+    # completed
+
+    windows.exitonclick()  # Exit program when user click on window
+
+
+main()
