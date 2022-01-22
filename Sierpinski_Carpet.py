@@ -30,6 +30,7 @@ def sierpinski(point, degree, tur):
     drawCarpet(point, colours[degree], tur)
 
     if degree > 0:
+        # All start from bottom left of drawn square
         # Bottom Left Square
         sierpinski([point[0], (point[0][0], thirds(point[0], point[1], 1)[1]), thirds(point[0], point[1], 1),
                     (thirds(point[0], point[3], 1)[0], point[0][1])], degree - 1, tur)
