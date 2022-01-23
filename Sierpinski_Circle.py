@@ -2,57 +2,67 @@ import turtle
 import math as m
 
 
-def drawCircle(sqaureCor, mid, angle, myTurtle):
-    # make line / shape not visible
-    # myTurtle.penup()
-    myTurtle.goto(sqaureCor[0][0], sqaureCor[0][1])
-    myTurtle.goto(sqaureCor[1][0], sqaureCor[1][1])
-    myTurtle.goto(sqaureCor[2][0], sqaureCor[2][1])
-    myTurtle.goto(sqaureCor[3][0], sqaureCor[3][1])
-    myTurtle.goto(sqaureCor[0][0], sqaureCor[0][1])
-    myTurtle.goto(mid[1][0], mid[1][1])
-    # make line / shape visible
-    myTurtle.pendown()
-    # draw circle
-    myTurtle.circle(mid[0])
-    # make line / shape not visible
-    # myTurtle.penup()
-    # myTurtle.forward(100)
+def drawCircle(point,radius,color,myTurtle):
+    myTurtle.up()
+    print(point)
+    myTurtle.goto(point)
+    myTurtle.down()
+    myTurtle.fillcolor(color)
+    myTurtle.begin_fill()
+    print("radius =", radius)
+    myTurtle.circle(radius)
+    myTurtle.end_fill()
 
 
-def radiusLen(r):
-    return r / 2
+def getNextRadius(radius):
+    return radius / (1 + m.sqrt(2))
+    
+    
+def sierpinski(point,radius,degree,skip,myTurtle):
+    colormap = ['blue','red','green','cyan','yellow','violet','orange']
+    drawCircle(point,radius,colormap[degree],myTurtle)
+    nextRadius = getNextRadius(radius)
+    print(skip)
 
+    if degree > 0:
+        nextSkip = skip + 1
 
-def midPointer(p1, p2):
-    l = m.sqrt(pow(p2[0] - p1[0], 2) + pow(p2[1] - p1[1], 2))
-    diff = l / 2
-    print((p1[0] + diff), (p1[1] + diff))
-    return diff, ((p1[0] + diff), (p1[1]))
+        if nextSkip > 4:
+            nextSkip = 1
 
+        # 1st circle (top left circle) NOT skipped
+        if skip != 1:
+            # Starting point
+            sierpinski([point[0]-nextRadius, point[1]+radius-2*nextRadius], nextRadius, degree-1, nextSkip, myTurtle)
+            # sierpinski([point[0]+nextRadius, point[1]+radius-2*nextRadius], nextRadius, degree-1, nextSkip, myTurtle)
 
-def sirepinski(sqaureCor, angle, degree, myTurtle):
-    colour = ["blue", "red", "green", "cyan", "yellow", "violet"]
-    drawCircle(sqaureCor, midPointer(sqaureCor[0], sqaureCor[1]), angle, myTurtle)
-
-    # if degree > 0:
-    # sirepinski(mid(r), myTurtle.left(90), degree - 1, myTurtle)
-    # sirepinski(mid(r), myTurtle.left(180), degree - 1, myTurtle)
-
+        # 2nd circle (bottom left circle) NOT skipped
+        if skip != 2:
+            # pass
+            sierpinski([point[0]-nextRadius, point[1]+radius], nextRadius, degree-1, nextSkip, myTurtle)
+        
+        # 3rd circle (top right circle) NOT skipped
+        if skip != 3:
+            # pass
+            sierpinski([point[0]+nextRadius, point[1]+radius], nextRadius, degree-1, nextSkip, myTurtle)
+        
+        # 4th circle (bottom right circle) NOT skipped
+        if skip != 4:
+            # pass
+            sierpinski([point[0]+nextRadius, point[1]+radius-2*nextRadius], nextRadius, degree-1, nextSkip, myTurtle)
 
 def main():
     myTurtle = turtle.Turtle()
+    myTurtle.speed(2000)
     win = turtle.Screen()
-    degree = 1
-    square = [[-200, -200], [-200, 200], [200, 200], [200, -200]]
-    radius = 100
-    # set angle to draw circle
-    angle = 90
+    degree = 5
+    point = [0,-100]
+    radius = 200
+    skip = 1
 
-    sirepinski(square, angle, degree, myTurtle)
+    sierpinski(point, radius, degree, skip, myTurtle)
 
     myTurtle.hideturtle()
     win.exitonclick()
-
 
 main()
