@@ -20,9 +20,9 @@ def thirds(p1, p2, n):
     # Find each smaller square total length
     length = m.sqrt(pow(p2[0] - p1[0], 2) + pow(p2[1] - p1[1], 2))
     # Find nth third length e.g. 1/3 of 300
-    diff = (n / 3) * length
+    newlen = (n / 3) * length
     # Return coordinate of square
-    return ((p1[0] + diff), (p1[1] + diff))
+    return ((p1[0] + newlen), (p1[1] + newlen))
 
 
 def sierpinski(point, degree, tur):
