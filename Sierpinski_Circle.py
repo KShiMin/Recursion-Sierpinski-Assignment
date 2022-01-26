@@ -28,7 +28,7 @@ def sierpinski(point,radius,degree,skip,myTurtle):
             nextSkip = 1
 
         # If skip is 1, it will move to the bottom after drawing the above code, however if skip changes, the pointer change
-        # Therefore, sometimes when drawn the shape does not go in seqeunce and jump around
+        # Therefore, sometimes when drawn the shape does not go in sequence and jump around
 
         # 1st circle (top left circle) is skipped
         # If skip = 2 / 3 / 4, start from bottom left
